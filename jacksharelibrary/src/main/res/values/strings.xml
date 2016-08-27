@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">ShareLibrary</string>
+
+    <!-- common -->
+    <string name="share_success">分享成功</string>
+    <string name="share_cancel">取消分享</string>
+    <string name="share_error">分享失败</string>
+
+    <!-- wx -->
+    <string name="error_wx_app_id_invalid">请先配置微信平台的APP_ID</string>
+
+    <string name="error_wx_no_platform">没有检测到微信客户端</string>
+
+    <string name="error_wx_share_failure">分享到微信失败</string>
+
+    <string name="error_wx_unsupported_version">当前微信版本不支持分享到朋友圈</string>
+
+    <string name="error_wx_param_text_invalid">分享内容不允许为空</string>
+
+    <string name="error_wx_param_url_invalid">url地址无效</string>
+
+
+</resources>

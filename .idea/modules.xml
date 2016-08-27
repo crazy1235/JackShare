@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/JackShare.iml" filepath="$PROJECT_DIR$/JackShare.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/sharelibrary/sharelibrary.iml" filepath="$PROJECT_DIR$/sharelibrary/sharelibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jacksharelibrary/jacksharelibrary.iml" filepath="$PROJECT_DIR$/jacksharelibrary/jacksharelibrary.iml" />
     </modules>
   </component>
 </project>

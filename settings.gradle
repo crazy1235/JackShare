@@ -1,1 +1,1 @@
-include ':app', ':sharelibrary'
+include ':app', ':jacksharelibrary'
