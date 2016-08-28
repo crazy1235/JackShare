@@ -3,6 +3,7 @@ package com.jacksen.sharelibrary.wx;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 
 import com.jacksen.sharelibrary.BaseShareHandler;
@@ -25,6 +26,7 @@ import com.jacksen.sharelibrary.wx.param.ShareWebPageParam;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.sdk.modelmsg.WXImageObject;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXTextObject;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
@@ -84,7 +86,7 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
         textObject.text = textParam.getContent(); // 分享的文本内容
 
         // check args
-        if (textObject.checkArgs()) {
+        if (!textObject.checkArgs()) {
             throw new InvalidParamException(context.getString(R.string.error_wx_param_text_invalid));
         }
 
@@ -103,6 +105,25 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
 
     @Override
     protected void shareImage(ShareImageParam imageParam) throws ShareException {
+        WXImageObject imageObject = new WXImageObject(imageParam.getBitmap());
+
+
+        if (!imageObject.checkArgs()) {
+            throw new InvalidParamException(context.getString(R.string.error_wx_param_text_invalid));
+        }
+
+        WXMediaMessage msg = new WXMediaMessage();
+        msg.mediaObject = imageObject;
+        Bitmap thumb = Bitmap.createScaledBitmap(imageParam.getBitmap(), 150, 150, true);
+        msg.setThumbImage(thumb);
+
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = buildTransaction();
+        req.message = msg;
+        req.scene = getShareType();
+
+        boolean result = iwxapi.sendReq(req);
+        judgeShareResult(result);
 
     }
 
