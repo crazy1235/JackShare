@@ -28,6 +28,7 @@ import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXImageObject;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.sdk.modelmsg.WXMusicObject;
 import com.tencent.mm.sdk.modelmsg.WXTextObject;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
@@ -129,6 +130,13 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
 
     @Override
     protected void shareMusic(ShareMusicParam musicParam) throws ShareException {
+        WXMusicObject musicObject = new WXMusicObject();
+        musicObject.musicUrl = musicParam.getTargetUrl();
+
+        WXMediaMessage mediaMessage = new WXMediaMessage();
+        mediaMessage.mediaObject = musicObject;
+        mediaMessage.title = musicParam.getTitle();
+        mediaMessage.description = musicParam.getDescription();
 
     }
 

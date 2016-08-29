@@ -5,9 +5,13 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 
 /**
- * Created by Admin on 2016/8/26.
+ * 三种形式：
+ * 1. 项目中图片
+ * 2. 磁盘中图片
+ * 3. 网络上图片
+ *
+ * @author jacksen on 2016/8/26.
  */
-
 public class ShareImageParam extends BaseShareParam {
 
     private Bitmap bitmap;

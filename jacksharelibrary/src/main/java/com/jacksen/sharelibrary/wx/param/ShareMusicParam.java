@@ -9,4 +9,6 @@ public class ShareMusicParam extends BaseShareParam{
     public ShareMusicParam(){
         super();
     }
+
+    
 }

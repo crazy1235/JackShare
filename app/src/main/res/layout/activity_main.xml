@@ -1,17 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.jacksen.jackshare.MainActivity">
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context="com.jacksen.sharelib.demo.MainActivity">
 
-    <TextView
+    <RadioGroup
+        android:id="@+id/radio_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
-</RelativeLayout>
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/text_rbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="文本" />
+
+        <RadioButton
+            android:id="@+id/image_rbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="图片" />
+
+        <RadioButton
+            android:id="@+id/music_rbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="音频" />
+
+        <RadioButton
+            android:id="@+id/video_rbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="视频" />
+
+        <RadioButton
+            android:id="@+id/web_rbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="网页" />
+
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/wechat_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="微信好友" />
+
+        <Button
+            android:id="@+id/moment_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="微信朋友圈" />
+
+        <Button
+            android:id="@+id/favorite_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="微信收藏" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/qq_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="QQ好友" />
+
+        <Button
+            android:id="@+id/qzone_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="QQ空间" />
+
+        <Button
+            android:id="@+id/qq_weibo_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="腾讯微博" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/sina_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="新浪微博" />
+</LinearLayout>

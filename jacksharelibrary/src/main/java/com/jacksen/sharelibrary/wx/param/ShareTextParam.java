@@ -6,13 +6,14 @@ package com.jacksen.sharelibrary.wx.param;
 
 public class ShareTextParam extends BaseShareParam {
 
-    public ShareTextParam(String title, String content) {
-        super(title, content);
+    // 文本类型 title 字段不起作用
+
+    public ShareTextParam() {
+        super();
     }
 
-    public ShareTextParam(String title, String content, String targetUrl) {
-        super(title, content, targetUrl);
+    public ShareTextParam(String text) {
+        super(null, text);
     }
-
 
 }
