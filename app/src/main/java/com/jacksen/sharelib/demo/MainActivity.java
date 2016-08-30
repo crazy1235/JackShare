@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.jacksen.sharelib.demo.util.Constants;
 import com.jacksen.sharelibrary.JackShare;
 import com.jacksen.sharelibrary.ShareListener;
+import com.jacksen.sharelibrary.anno.PlatformScope;
 import com.jacksen.sharelibrary.core.Platform;
 import com.jacksen.sharelibrary.wx.param.ShareImageParam;
 import com.jacksen.sharelibrary.wx.param.ShareTextParam;
@@ -150,19 +151,20 @@ public class MainActivity extends AppCompatActivity {
      */
     private ShareListener shareListener = new ShareListener() {
         @Override
-        public void onSuccess() {
+        public void onSuccess(@PlatformScope String platform) {
             Toast.makeText(MainActivity.this, "分享成功", Toast.LENGTH_SHORT).show();
         }
 
         @Override
-        public void onError(String errMsg) {
+        public void onError(@PlatformScope String platform, String errMsg) {
             Toast.makeText(MainActivity.this, "分享失败 -- " + errMsg, Toast.LENGTH_SHORT).show();
         }
 
         @Override
-        public void onCancel() {
+        public void onCancel(@PlatformScope String platform) {
             Toast.makeText(MainActivity.this, "分享取消", Toast.LENGTH_SHORT).show();
         }
+       
     };
 
     @Override

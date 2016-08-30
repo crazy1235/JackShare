@@ -11,6 +11,8 @@ import com.jacksen.sharelibrary.BaseShareHandler;
 import com.jacksen.sharelibrary.PlatformConfigHelper;
 import com.jacksen.sharelibrary.R;
 import com.jacksen.sharelibrary.ShareListener;
+import com.jacksen.sharelibrary.anno.PlatformScope;
+import com.jacksen.sharelibrary.core.Platform;
 import com.jacksen.sharelibrary.core.ShareConstants;
 import com.jacksen.sharelibrary.core.ShareStatus;
 import com.jacksen.sharelibrary.exception.ConfigErrorException;
@@ -34,6 +36,8 @@ import com.tencent.mm.sdk.modelmsg.WXTextObject;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+
+import org.w3c.dom.Text;
 
 /**
  * Created by Admin on 2016/8/24.
@@ -66,7 +70,7 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
         if (iwxapi.isWXAppInstalled()) {
             iwxapi.registerApp(appId);
         } else {
-            getShareListener().onError(context.getString(R.string.error_wx_no_platform));
+            getShareListener().onError(getSharePlatform(), context.getString(R.string.error_wx_no_platform));
             throw new ConfigErrorException(context.getString(R.string.error_wx_no_platform), ShareStatus.StatusCode.CODE_SHARE_ERROR_NOT_INSTALL);
         }
     }
@@ -76,7 +80,7 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
         if (SendMessageToWX.Req.WXSceneTimeline == getShareType()) {
             int wxVersion = iwxapi.getWXAppSupportAPI();
             if (wxVersion < ConstUtil.MOMENT_SUPPORTED_VERSION) {
-                getShareListener().onError(context.getString(R.string.error_wx_unsupported_version));
+                getShareListener().onError(getSharePlatform(), context.getString(R.string.error_wx_unsupported_version));
                 throw new UnsupportedOperateException(context.getString(R.string.error_wx_unsupported_version));
             }
         }
@@ -175,11 +179,16 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
      */
     private WXImageObject buildWXImageObject(ShareImageParam imageParam) {
         WXImageObject imageObject = new WXImageObject();
+        Bitmap bitmap;
         if (!TextUtils.isEmpty(imageParam.getLocalImgPath())) {
-            imageObject.setImagePath(imageParam.getLocalImgPath());
+            bitmap = BitmapUtil.decodeImageFile(imageParam.getLocalImgPath(), ConstUtil.THUMB_SIZE_LIMIT, ConstUtil.THUMB_SIZE_LIMIT);
         } else if (imageParam.getBitmap() != null) {
-            imageObject.imageData = BitmapUtil.bitmapToByteArray(imageParam.getBitmap());
+            bitmap = imageParam.getBitmap();
+        } else if (!TextUtils.isEmpty(imageParam.getNetImgPath())) {
+            bitmap = BitmapUtil.decodeImageFile(imageParam.getNetImgPath(), ConstUtil.THUMB_SIZE_LIMIT, ConstUtil.THUMB_SIZE_LIMIT);
         }
+
+        imageObject.imageData = BitmapUtil.bitmapToByteArray(imageParam.getBitmap());
         return imageObject;
     }
 
@@ -191,7 +200,7 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
      */
     private void judgeShareResult(boolean result) throws ShareException {
         if (!result) {
-            getShareListener().onError(context.getString(R.string.error_wx_share_failure));
+            getShareListener().onError(getSharePlatform(), context.getString(R.string.error_wx_share_failure));
             throw new ShareException(context.getString(R.string.error_wx_share_failure));
         }
     }
@@ -223,16 +232,30 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
         }
         switch (baseResp.errCode) {
             case BaseResp.ErrCode.ERR_OK:
-                shareListener.onSuccess();
+                shareListener.onSuccess(getSharePlatform());
                 break;
             case BaseResp.ErrCode.ERR_USER_CANCEL:
-                shareListener.onCancel();
+                shareListener.onCancel(getSharePlatform());
                 break;
             case BaseResp.ErrCode.ERR_SENT_FAILED:
-                shareListener.onError(baseResp.errStr);
+                shareListener.onError(getSharePlatform(), baseResp.errStr);
                 break;
         }
     }
+
+    private
+    @PlatformScope
+    String getSharePlatform() {
+        if (SendMessageToWX.Req.WXSceneSession == getShareType()) {
+            return Platform.WX_SESSION;
+        } else if (SendMessageToWX.Req.WXSceneTimeline == getShareType()) {
+            return Platform.WX_MOMENT;
+        } else if (SendMessageToWX.Req.WXSceneFavorite == getShareType()) {
+            return Platform.WX_FAVORITE;
+        }
+        return Platform.DEFAULT;
+    }
+
 
     private BroadcastReceiver shareResultReceiver = new BroadcastReceiver() {
         @Override
@@ -244,13 +267,13 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
             int statusCode = intent.getIntExtra(ShareConstants.STATUS_CODE, -1);
             switch (statusCode) {
                 case ShareStatus.StatusCode.CODE_SHARE_SUCCESS:
-                    shareListener.onSuccess();
+                    shareListener.onSuccess(getSharePlatform());
                     break;
                 case ShareStatus.StatusCode.CODE_SHARE_CANCEL:
-                    shareListener.onCancel();
+                    shareListener.onCancel(getSharePlatform());
                     break;
                 case ShareStatus.StatusCode.CODE_SHARE_ERROR:
-                    shareListener.onError("");
+                    shareListener.onError(getSharePlatform(), "");
                     break;
             }
 

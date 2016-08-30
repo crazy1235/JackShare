@@ -8,15 +8,9 @@ import com.jacksen.sharelibrary.anno.PlatformScope;
 
 public interface ShareListener {
 
-    void onSuccess();
-
-    void onError(String errMsg);
-
-    void onCancel();
-
-    /*void onSuccess(@PlatformScope String platform);
+    void onSuccess(@PlatformScope String platform);
 
     void onError(@PlatformScope String platform, String errMsg);
 
-    void onCancel(@PlatformScope String platform);*/
+    void onCancel(@PlatformScope String platform);
 }

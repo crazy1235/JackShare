@@ -8,9 +8,13 @@ import com.jacksen.sharelibrary.anno.PlatformScope;
 
 public class Platform {
 
+    public static final String DEFAULT = "";
+
     public static final String WX_SESSION = "wx_session";
 
     public static final String WX_MOMENT = "wx_moment";
+
+    public static final String WX_FAVORITE = "wx_favorite";
 
     @PlatformScope
     private String platform;

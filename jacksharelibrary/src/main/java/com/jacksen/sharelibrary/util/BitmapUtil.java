@@ -1,6 +1,8 @@
 package com.jacksen.sharelibrary.util;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -29,6 +31,48 @@ public class BitmapUtil {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public static Bitmap decodeImageFile(String path, float width, float height) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = getInSampleSize(path, width, height);
+        options.inJustDecodeBounds = true;
+        options.inPreferredConfig = Bitmap.Config.RGB_565;
+        return BitmapFactory.decodeFile(path, options);
+    }
+
+    private static int getInSampleSize(String path, float width, float height) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(path, options);
+        int outWidth = options.outWidth;
+        int outHeight = options.outHeight;
+        return (int) getScale(width, height, outWidth, outHeight);
+    }
+
+    private static double getScale(float targetWidth, float targetHeight, float oriWidth, float oriHeight) {
+        double scale;
+        if (oriWidth >= oriHeight) {
+            float widthScale = oriWidth / targetWidth;
+            float heightScale = oriHeight / targetHeight;
+            if (widthScale >= heightScale) {
+                scale = Math.rint(widthScale);
+            } else {
+                scale = Math.rint(heightScale);
+            }
+        } else {
+            float widthScale = oriWidth / targetWidth;
+            float heightScale = oriHeight / targetHeight;
+            if (widthScale >= heightScale) {
+                scale = widthScale;
+            } else {
+                scale = heightScale;
+            }
+        }
+        if (scale <= 0) {
+            return 1.0d;
+        }
+        return scale;
     }
 
 }

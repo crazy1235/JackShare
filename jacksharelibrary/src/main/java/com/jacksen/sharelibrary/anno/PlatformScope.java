@@ -13,8 +13,8 @@ import java.lang.annotation.Target;
  */
 
 @Documented
-@Target({ElementType.FIELD,ElementType.PARAMETER})
-@StringDef({Platform.WX_MOMENT, Platform.WX_SESSION})
+@Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD})
+@StringDef({Platform.DEFAULT, Platform.WX_MOMENT, Platform.WX_SESSION, Platform.WX_FAVORITE})
 public @interface PlatformScope {
 
 }
