@@ -7,4 +7,6 @@ package com.jacksen.sharelibrary.util;
 public class ConstUtil {
 
     public static final int MOMENT_SUPPORTED_VERSION = 0x21020001;
+
+    public static final int THUMB_SIZE_LIMIT = 150;
 }

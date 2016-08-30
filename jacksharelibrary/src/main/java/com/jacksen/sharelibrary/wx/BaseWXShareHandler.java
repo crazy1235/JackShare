@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.jacksen.sharelibrary.BaseShareHandler;
@@ -82,7 +83,7 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
     }
 
     @Override
-    protected void shareText(ShareTextParam textParam) throws ShareException {
+    protected void shareText(@NonNull ShareTextParam textParam) throws ShareException {
         WXTextObject textObject = new WXTextObject();
         textObject.text = textParam.getContent(); // 分享的文本内容
 
@@ -105,9 +106,8 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
     }
 
     @Override
-    protected void shareImage(ShareImageParam imageParam) throws ShareException {
-        WXImageObject imageObject = new WXImageObject(imageParam.getBitmap());
-
+    protected void shareImage(@NonNull ShareImageParam imageParam) throws ShareException {
+        WXImageObject imageObject = buildWXImageObject(imageParam);
 
         if (!imageObject.checkArgs()) {
             throw new InvalidParamException(context.getString(R.string.error_wx_param_text_invalid));
@@ -115,7 +115,7 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
 
         WXMediaMessage msg = new WXMediaMessage();
         msg.mediaObject = imageObject;
-        Bitmap thumb = Bitmap.createScaledBitmap(imageParam.getBitmap(), 150, 150, true);
+        Bitmap thumb = Bitmap.createScaledBitmap(imageParam.getBitmap(), ConstUtil.THUMB_SIZE_LIMIT, ConstUtil.THUMB_SIZE_LIMIT, true);
         msg.setThumbImage(thumb);
 
         SendMessageToWX.Req req = new SendMessageToWX.Req();
@@ -129,7 +129,7 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
     }
 
     @Override
-    protected void shareMusic(ShareMusicParam musicParam) throws ShareException {
+    protected void shareMusic(@NonNull ShareMusicParam musicParam) throws ShareException {
         WXMusicObject musicObject = new WXMusicObject();
         musicObject.musicUrl = musicParam.getTargetUrl();
 
@@ -141,12 +141,12 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
     }
 
     @Override
-    protected void shareVideo(ShareVideoParam videoParam) throws ShareException {
+    protected void shareVideo(@NonNull ShareVideoParam videoParam) throws ShareException {
 
     }
 
     @Override
-    protected void shareWebPage(ShareWebPageParam webPageParam) throws ShareException {
+    protected void shareWebPage(@NonNull ShareWebPageParam webPageParam) throws ShareException {
         if (TextUtils.isEmpty(webPageParam.getTargetUrl())) {
             throw new InvalidParamException(context.getString(R.string.error_wx_param_url_invalid));
         }
@@ -167,6 +167,21 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
         judgeShareResult(result);
     }
 
+    /**
+     * build one object of WXImageObject
+     *
+     * @param imageParam
+     * @return
+     */
+    private WXImageObject buildWXImageObject(ShareImageParam imageParam) {
+        WXImageObject imageObject = new WXImageObject();
+        if (!TextUtils.isEmpty(imageParam.getLocalImgPath())) {
+            imageObject.setImagePath(imageParam.getLocalImgPath());
+        } else if (imageParam.getBitmap() != null) {
+            imageObject.imageData = BitmapUtil.bitmapToByteArray(imageParam.getBitmap());
+        }
+        return imageObject;
+    }
 
     /**
      * 判断发送分享的结果

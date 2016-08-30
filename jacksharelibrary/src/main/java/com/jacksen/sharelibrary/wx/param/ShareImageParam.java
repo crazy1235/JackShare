@@ -1,8 +1,6 @@
 package com.jacksen.sharelibrary.wx.param;
 
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.support.annotation.DrawableRes;
 
 /**
  * 三种形式：
@@ -18,15 +16,17 @@ public class ShareImageParam extends BaseShareParam {
 
     private byte[] imageData;
 
-    private String imagePath;
+    private String localImgPath; // 本地图片地址
+
+    private String netImgPath; // 网络图片地址
 
     public ShareImageParam() {
         super();
     }
 
-    public ShareImageParam(String imagePath) {
+    public ShareImageParam(String localImgPath) {
         super();
-        this.imagePath = imagePath;
+        this.localImgPath = localImgPath;
     }
 
     public Bitmap getBitmap() {
@@ -45,11 +45,19 @@ public class ShareImageParam extends BaseShareParam {
         this.imageData = imageData;
     }
 
-    public String getImagePath() {
-        return imagePath;
+    public String getLocalImgPath() {
+        return localImgPath;
     }
 
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+    public void setLocalImgPath(String localImgPath) {
+        this.localImgPath = localImgPath;
+    }
+
+    public String getNetImgPath() {
+        return netImgPath;
+    }
+
+    public void setNetImgPath(String netImgPath) {
+        this.netImgPath = netImgPath;
     }
 }

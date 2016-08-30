@@ -1,6 +1,7 @@
 package com.jacksen.sharelibrary;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.jacksen.sharelibrary.exception.ShareException;
 import com.jacksen.sharelibrary.wx.param.BaseShareParam;
@@ -80,17 +81,17 @@ public abstract class BaseShareHandler {
     protected abstract void checkPlatform() throws ShareException;
 
     // 分享文本
-    protected abstract void shareText(ShareTextParam textParam) throws ShareException;
+    protected abstract void shareText(@NonNull ShareTextParam textParam) throws ShareException;
 
     // 分享图片
-    protected abstract void shareImage(ShareImageParam imageParam) throws ShareException;
+    protected abstract void shareImage(@NonNull ShareImageParam imageParam) throws ShareException;
 
     // 分享音乐
-    protected abstract void shareMusic(ShareMusicParam musicParam) throws ShareException;
+    protected abstract void shareMusic(@NonNull ShareMusicParam musicParam) throws ShareException;
 
     // 分享视频
-    protected abstract void shareVideo(ShareVideoParam videoParam) throws ShareException;
+    protected abstract void shareVideo(@NonNull ShareVideoParam videoParam) throws ShareException;
 
     // 分享网页
-    protected abstract void shareWebPage(ShareWebPageParam webPageParam) throws ShareException;
+    protected abstract void shareWebPage(@NonNull ShareWebPageParam webPageParam) throws ShareException;
 }
