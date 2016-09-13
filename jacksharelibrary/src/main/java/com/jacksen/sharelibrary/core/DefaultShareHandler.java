@@ -21,6 +21,11 @@ public class DefaultShareHandler extends BaseShareHandler {
     }
 
     @Override
+    protected String getSharePlatform() {
+        return Platform.DEFAULT;
+    }
+
+    @Override
     protected void checkConfig() throws Exception {
 
     }

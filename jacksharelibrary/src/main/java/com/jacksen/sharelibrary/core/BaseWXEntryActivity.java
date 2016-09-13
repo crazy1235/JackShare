@@ -58,7 +58,7 @@ public abstract class BaseWXEntryActivity extends Activity implements IWXAPIEven
     public void onResp(BaseResp baseResp) {
         shareHandler.onResp(baseResp);
         // finish this activity
-        finish();
+        this.finish();
     }
 
     protected void release() {

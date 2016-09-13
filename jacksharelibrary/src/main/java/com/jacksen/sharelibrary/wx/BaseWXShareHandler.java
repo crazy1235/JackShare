@@ -37,8 +37,6 @@ import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
-import org.w3c.dom.Text;
-
 /**
  * Created by Admin on 2016/8/24.
  */
@@ -55,6 +53,23 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
 //        context.registerReceiver(shareResultReceiver, intentFilter);
     }
 
+    protected abstract int getWxShareType();
+
+
+    @Override
+    protected
+    @PlatformScope
+    String getSharePlatform() {
+        switch (getWxShareType()) {
+            case SendMessageToWX.Req.WXSceneTimeline:
+                return Platform.WX_MOMENT;
+            case SendMessageToWX.Req.WXSceneSession:
+                return Platform.WX_SESSION;
+            case SendMessageToWX.Req.WXSceneFavorite:
+                return Platform.WX_FAVORITE;
+        }
+        return Platform.DEFAULT;
+    }
 
     @Override
     protected void checkConfig() throws Exception {
@@ -77,7 +92,7 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
 
     @Override
     protected void checkPlatform() throws ShareException {
-        if (SendMessageToWX.Req.WXSceneTimeline == getShareType()) {
+        if (SendMessageToWX.Req.WXSceneTimeline == getWxShareType()) {
             int wxVersion = iwxapi.getWXAppSupportAPI();
             if (wxVersion < ConstUtil.MOMENT_SUPPORTED_VERSION) {
                 getShareListener().onError(getSharePlatform(), context.getString(R.string.error_wx_unsupported_version));
@@ -103,7 +118,7 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
         SendMessageToWX.Req req = new SendMessageToWX.Req();
         req.transaction = buildTransaction();
         req.message = textMsg;
-        req.scene = getShareType();
+        req.scene = getWxShareType();
 
         boolean result = iwxapi.sendReq(req);
         judgeShareResult(result);
@@ -125,7 +140,7 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
         SendMessageToWX.Req req = new SendMessageToWX.Req();
         req.transaction = buildTransaction();
         req.message = msg;
-        req.scene = getShareType();
+        req.scene = getWxShareType();
 
         boolean result = iwxapi.sendReq(req);
         judgeShareResult(result);
@@ -165,7 +180,7 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
         SendMessageToWX.Req req = new SendMessageToWX.Req();
         req.message = message;
         req.transaction = buildTransaction();
-        req.scene = getShareType(); // 分享到朋友或者朋友圈
+        req.scene = getWxShareType(); // 分享到朋友或者朋友圈
 
         boolean result = iwxapi.sendReq(req);
         judgeShareResult(result);
@@ -214,9 +229,6 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
         super.release();
     }
 
-    protected abstract int getShareType();
-
-
     public void onReq(BaseReq baseReq) {
     }
 
@@ -241,19 +253,6 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
                 shareListener.onError(getSharePlatform(), baseResp.errStr);
                 break;
         }
-    }
-
-    private
-    @PlatformScope
-    String getSharePlatform() {
-        if (SendMessageToWX.Req.WXSceneSession == getShareType()) {
-            return Platform.WX_SESSION;
-        } else if (SendMessageToWX.Req.WXSceneTimeline == getShareType()) {
-            return Platform.WX_MOMENT;
-        } else if (SendMessageToWX.Req.WXSceneFavorite == getShareType()) {
-            return Platform.WX_FAVORITE;
-        }
-        return Platform.DEFAULT;
     }
 
 

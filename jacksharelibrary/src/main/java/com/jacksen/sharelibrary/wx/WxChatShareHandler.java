@@ -15,7 +15,8 @@ public class WxChatShareHandler extends BaseWXShareHandler {
     }
 
     @Override
-    protected int getShareType() {
-        return SendMessageToWX.Req.WXSceneSession; // 分享好友
+    protected int getWxShareType() {
+        return SendMessageToWX.Req.WXSceneSession; // wechat
     }
+
 }

@@ -14,7 +14,8 @@ public class WxMomentShareHandler extends BaseWXShareHandler {
     }
 
     @Override
-    protected int getShareType() {
+    protected int getWxShareType() {
         return SendMessageToWX.Req.WXSceneTimeline; // 分享朋友圈
     }
+
 }

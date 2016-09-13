@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PlatformInfo>
+
+    <!-- 微信好友 -->
+    <Wechat AppId="wx67948e9412b651ad" AppSecret="99f1f3aacb140e06b1ebe40d8cffd828" Enable="true" />
+
+    <!-- 微信朋友圈 -->
+    <WechatMoments AppId="wx67948e9412b651ad" AppSecret="99f1f3aacb140e06b1ebe40d8cffd828" Enable="true" />
+
+    <!-- 微信收藏 -->
+    <WechatFavorite AppId="wx67948e9412b651ad" AppSecret="99f1f3aacb140e06b1ebe40d8cffd828" Enable="true" />
+
+    <!-- QQ好友 -->
+    <QQ AppId="1111111" AppKey="22222222" Enable="true" />
+
+    <!-- QQ空间 -->
+    <QZone AppId="3333333333" AppKey="44444444444" Enable="true" />
+
+    <!-- 腾讯微博 -->
+    <TencentWeibo AppId="5555555555" AppSecret="666666666666" Enable="true" RedirectUrl="" />
+
+    <!-- 新浪微博 -->
+    <SinaWeibo AppId="777777777" AppSecret="88888888" Enable="true" IsWebShare="false" RedirectUrl="" />
+
+</PlatformInfo>

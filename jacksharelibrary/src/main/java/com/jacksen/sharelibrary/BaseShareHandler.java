@@ -3,6 +3,7 @@ package com.jacksen.sharelibrary;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.jacksen.sharelibrary.anno.PlatformScope;
 import com.jacksen.sharelibrary.exception.ShareException;
 import com.jacksen.sharelibrary.wx.param.BaseShareParam;
 import com.jacksen.sharelibrary.wx.param.ShareImageParam;
@@ -34,6 +35,10 @@ public abstract class BaseShareHandler {
     public void share(BaseShareParam shareParam, ShareListener shareListener) throws ShareException {
         this.shareListener = shareListener;
 
+        // before share
+        if (shareListener != null) {
+            this.shareListener.onPreShare(getSharePlatform());
+        }
         // init
         initShare();
         // check platform
@@ -70,6 +75,9 @@ public abstract class BaseShareHandler {
         context = null;
         shareListener = null;
     }
+
+    // share platform
+    protected abstract @PlatformScope String getSharePlatform();
 
     // 检查配置
     protected abstract void checkConfig() throws Exception;

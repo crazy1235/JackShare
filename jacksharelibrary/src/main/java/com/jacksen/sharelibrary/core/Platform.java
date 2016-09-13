@@ -10,11 +10,13 @@ public class Platform {
 
     public static final String DEFAULT = "";
 
-    public static final String WX_SESSION = "wx_session";
+    public static final String WX_SESSION = "Wechat";
 
-    public static final String WX_MOMENT = "wx_moment";
+    public static final String WX_MOMENT = "WechatMoments";
 
-    public static final String WX_FAVORITE = "wx_favorite";
+    public static final String WX_FAVORITE = "WechatFavorite";
+
+    public static String[] values = new String[]{WX_SESSION, WX_MOMENT, WX_FAVORITE};
 
     @PlatformScope
     private String platform;

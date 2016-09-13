@@ -20,7 +20,6 @@ import com.jacksen.sharelibrary.wx.param.ShareTextParam;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
@@ -61,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+//        JackShare.init(this);
 
         JackShare.init(Constants.WX_APP_ID, Constants.WX_APP_SECRET);
 
@@ -150,6 +151,11 @@ public class MainActivity extends AppCompatActivity {
      * 分享监听回调
      */
     private ShareListener shareListener = new ShareListener() {
+        @Override
+        public void onPreShare(@PlatformScope String platform) {
+            Toast.makeText(MainActivity.this, "pre share", Toast.LENGTH_SHORT).show();
+        }
+
         @Override
         public void onSuccess(@PlatformScope String platform) {
             Toast.makeText(MainActivity.this, "分享成功", Toast.LENGTH_SHORT).show();
