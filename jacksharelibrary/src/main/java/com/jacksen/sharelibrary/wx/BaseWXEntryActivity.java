@@ -1,11 +1,12 @@
-package com.jacksen.sharelibrary.core;
+package com.jacksen.sharelibrary.wx;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.Window;
 
-import com.jacksen.sharelibrary.wx.BaseWXShareHandler;
-import com.jacksen.sharelibrary.wx.WxChatShareHandler;
+import com.jacksen.sharelibrary.core.ShareHandlerPool;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.openapi.IWXAPI;
@@ -20,10 +21,18 @@ public abstract class BaseWXEntryActivity extends Activity implements IWXAPIEven
 
     private IWXAPI iwxapi;
     private BaseWXShareHandler shareHandler;
+    private String appId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            appId = bundle.getString("id", "wx67948e9412b651ad");
+        }
 
         // 1.
         shareHandler = (BaseWXShareHandler) ShareHandlerPool.getCurrentHandler();
@@ -34,6 +43,7 @@ public abstract class BaseWXEntryActivity extends Activity implements IWXAPIEven
         // 2.
         if (iwxapi == null) {
             iwxapi = WXAPIFactory.createWXAPI(this, getAppId(), false);
+//            iwxapi = WXAPIFactory.createWXAPI(this, appId, false);
             if (iwxapi.isWXAppInstalled()) {
                 iwxapi.registerApp(getAppId());
             }
@@ -58,7 +68,18 @@ public abstract class BaseWXEntryActivity extends Activity implements IWXAPIEven
     public void onResp(BaseResp baseResp) {
         shareHandler.onResp(baseResp);
         // finish this activity
+        /*new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+            }
+        }, 500);*/
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
         this.finish();
+        return super.onTouchEvent(event);
     }
 
     protected void release() {

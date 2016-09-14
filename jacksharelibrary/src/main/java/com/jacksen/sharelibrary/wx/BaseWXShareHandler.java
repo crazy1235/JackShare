@@ -61,10 +61,10 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
     @PlatformScope
     String getSharePlatform() {
         switch (getWxShareType()) {
-            case SendMessageToWX.Req.WXSceneTimeline:
-                return Platform.WX_MOMENT;
             case SendMessageToWX.Req.WXSceneSession:
                 return Platform.WX_SESSION;
+            case SendMessageToWX.Req.WXSceneTimeline:
+                return Platform.WX_MOMENT;
             case SendMessageToWX.Req.WXSceneFavorite:
                 return Platform.WX_FAVORITE;
         }
@@ -81,6 +81,15 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
 
     @Override
     protected void initShare() throws ShareException {
+        //
+        /*try {
+            Intent intent = new Intent(context, Class.forName(context.getPackageName() + ".wxapi.WXEntryActivity"));
+            intent.putExtra("id", "wx67948e9412b651ad");
+            context.startActivity(intent);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }*/
+
         iwxapi = WXAPIFactory.createWXAPI(context, appId, true);
         if (iwxapi.isWXAppInstalled()) {
             iwxapi.registerApp(appId);

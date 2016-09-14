@@ -153,22 +153,22 @@ public class MainActivity extends AppCompatActivity {
     private ShareListener shareListener = new ShareListener() {
         @Override
         public void onPreShare(@PlatformScope String platform) {
-            Toast.makeText(MainActivity.this, "pre share", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "准备开始分享...", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onSuccess(@PlatformScope String platform) {
-            Toast.makeText(MainActivity.this, "分享成功", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "分享成功...", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onError(@PlatformScope String platform, String errMsg) {
-            Toast.makeText(MainActivity.this, "分享失败 -- " + errMsg, Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "分享失败... -- " + errMsg, Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onCancel(@PlatformScope String platform) {
-            Toast.makeText(MainActivity.this, "分享取消", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "分享取消...", Toast.LENGTH_SHORT).show();
         }
        
     };

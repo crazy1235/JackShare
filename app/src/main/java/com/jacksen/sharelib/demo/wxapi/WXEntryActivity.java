@@ -2,7 +2,7 @@ package com.jacksen.sharelib.demo.wxapi;
 
 
 import com.jacksen.sharelib.demo.util.Constants;
-import com.jacksen.sharelibrary.core.BaseWXEntryActivity;
+import com.jacksen.sharelibrary.wx.BaseWXEntryActivity;
 
 public class WXEntryActivity extends BaseWXEntryActivity {
 
