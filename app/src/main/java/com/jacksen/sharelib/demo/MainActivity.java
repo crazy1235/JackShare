@@ -21,6 +21,7 @@ import com.jacksen.sharelibrary.core.Platform;
 import com.jacksen.sharelibrary.wx.param.ShareImageParam;
 import com.jacksen.sharelibrary.wx.param.ShareMusicParam;
 import com.jacksen.sharelibrary.wx.param.ShareTextParam;
+import com.jacksen.sharelibrary.wx.param.ShareWebPageParam;
 
 import java.io.File;
 
@@ -183,8 +184,24 @@ public class MainActivity extends AppCompatActivity {
                 JackShare.share(this, Platform.QQ, musicParam, shareListener);
                 break;
             case 4:
+                ShareTextParam textParam = new ShareTextParam("123");
+                JackShare.share(this, Platform.QQ, textParam, shareListener);
                 break;
             default:
+                break;
+        }
+    }
+
+    @OnClick(R.id.qzone_btn)
+    public void shareToQZone(){
+        switch (shareType){
+            case 4:
+                ShareWebPageParam webPageParam = new ShareWebPageParam("1111","2222");
+                webPageParam.setTargetUrl("http://blog.csdn.net/crazy1235");
+                ShareImageParam imageParam = new ShareImageParam();
+                imageParam.setNetImgPath("http://img3.douban.com/lpic/s3635685.jpg");
+                webPageParam.setImageParam(imageParam);
+                JackShare.share(this, Platform.QZone, webPageParam, shareListener);
                 break;
         }
     }

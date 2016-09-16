@@ -9,6 +9,10 @@ import com.jacksen.sharelibrary.core.ShareStatus;
 public class UnsupportedOperateException extends ShareException {
 
     public UnsupportedOperateException(String message) {
-        super(message, ShareStatus.StatusCode.CODE_SHARE_ERROR_UNSUPPORTED_MOMENT);
+        super(message);
+    }
+
+    public UnsupportedOperateException(String message, int code) {
+        super(message, code);
     }
 }

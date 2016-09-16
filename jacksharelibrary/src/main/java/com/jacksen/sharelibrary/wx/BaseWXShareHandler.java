@@ -105,7 +105,7 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
             int wxVersion = iwxapi.getWXAppSupportAPI();
             if (wxVersion < ConstUtil.MOMENT_SUPPORTED_VERSION) {
                 getShareListener().onError(getSharePlatform(), context.getString(R.string.error_wx_unsupported_version));
-                throw new UnsupportedOperateException(context.getString(R.string.error_wx_unsupported_version));
+                throw new UnsupportedOperateException(context.getString(R.string.error_wx_unsupported_version), ShareStatus.StatusCode.CODE_SHARE_ERROR_UNSUPPORTED_MOMENT);
             }
         }
     }

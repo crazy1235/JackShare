@@ -40,7 +40,7 @@ public abstract class BaseQQShareHandler extends BaseShareHandler {
     protected void checkConfig() throws Exception {
         appId = PlatformConfigHelper.getAppId(Platform.QQ);
         if (TextUtils.isEmpty(appId)) {
-            throw new ConfigErrorException(context.getString(R.string.error_wx_app_id_invalid));
+            throw new ConfigErrorException(context.getString(R.string.error_qq_app_id_invalid));
         }
     }
 
@@ -59,22 +59,10 @@ public abstract class BaseQQShareHandler extends BaseShareHandler {
         }
     }
 
-    /**
-     * do the real share operate.
-     * <p>
-     * must do it in the main thread.
-     */
-    protected void startShare(final Bundle bundle) {
-        ThreadManager.getMainHandler().post(new Runnable() {
-            @Override
-            public void run() {
-                tencent.shareToQQ((Activity) context, bundle, listener);
-            }
-        });
-    }
 
 
-    protected IUiListener listener = new IUiListener() {
+
+    IUiListener listener = new IUiListener() {
         @Override
         public void onComplete(Object o) {
             if (getShareListener() != null) {
@@ -97,14 +85,5 @@ public abstract class BaseQQShareHandler extends BaseShareHandler {
         }
     };
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Constants.REQUEST_QQ_SHARE) {
-            Tencent.onActivityResultData(requestCode, resultCode, data, listener);
-            if (resultCode == Constants.ACTIVITY_OK) {
-                Tencent.handleResultData(data, listener);
-            }
-        }
-    }
 
 }

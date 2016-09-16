@@ -24,12 +24,4 @@ public interface ShareStatus {
         int CODE_SHARE_ERROR_UNSUPPORTED_MOMENT = 1022;
     }
 
-    interface StatusMessage {
-
-        /*String MSG_PARAM_INVALID_TEXT = "text is empty";
-
-        String MSG_PARAM_INVALID_URL = "target url is null or invalid.";
-
-        String MSG_ERROR_UNSUPPORTED_MOMENT = "your WeChat platform version is too low";*/
-    }
 }
