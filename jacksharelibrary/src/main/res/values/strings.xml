@@ -19,5 +19,15 @@
 
     <string name="error_wx_param_url_invalid">url地址无效</string>
 
+    <!-- qq -->
+    <string name="error_qq_unsupported_version">尚未安装QQ或当前QQ版本不支持分享</string>
+
+    <string name="error_qq_param_title_invalid">分享标题不允许为空，最长30个字符</string>
+
+    <string name="error_qq_param_targeturl_invalid">分享跳转的URL不允许为空</string>
+
+    <string name="error_qq_param_audiourl_invalid">音乐文件的URL连接不允许为空</string>
+
+    <string name="error_qq_local_img_url_invalid">本地图片地址无效</string>
 
 </resources>

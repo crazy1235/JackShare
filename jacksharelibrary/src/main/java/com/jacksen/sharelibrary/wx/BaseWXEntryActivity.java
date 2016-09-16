@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.Window;
 
+import com.jacksen.sharelibrary.PlatformConfigHelper;
+import com.jacksen.sharelibrary.core.Platform;
 import com.jacksen.sharelibrary.core.ShareHandlerPool;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
@@ -17,7 +19,7 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
  * Created by Admin on 2016/8/24.
  */
 
-public abstract class BaseWXEntryActivity extends Activity implements IWXAPIEventHandler {
+public class BaseWXEntryActivity extends Activity implements IWXAPIEventHandler {
 
     private IWXAPI iwxapi;
     private BaseWXShareHandler shareHandler;
@@ -34,6 +36,8 @@ public abstract class BaseWXEntryActivity extends Activity implements IWXAPIEven
             appId = bundle.getString("id", "wx67948e9412b651ad");
         }
 
+        appId = PlatformConfigHelper.getAppId(Platform.WX_SESSION);
+
         // 1.
         shareHandler = (BaseWXShareHandler) ShareHandlerPool.getCurrentHandler();
         if (shareHandler == null) {
@@ -42,10 +46,9 @@ public abstract class BaseWXEntryActivity extends Activity implements IWXAPIEven
 
         // 2.
         if (iwxapi == null) {
-            iwxapi = WXAPIFactory.createWXAPI(this, getAppId(), false);
-//            iwxapi = WXAPIFactory.createWXAPI(this, appId, false);
+            iwxapi = WXAPIFactory.createWXAPI(this, appId, false);
             if (iwxapi.isWXAppInstalled()) {
-                iwxapi.registerApp(getAppId());
+                iwxapi.registerApp(appId);
             }
             iwxapi.handleIntent(getIntent(), this);
         }
@@ -68,12 +71,7 @@ public abstract class BaseWXEntryActivity extends Activity implements IWXAPIEven
     public void onResp(BaseResp baseResp) {
         shareHandler.onResp(baseResp);
         // finish this activity
-        /*new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                finish();
-            }
-        }, 500);*/
+        this.finish();
     }
 
     @Override
@@ -87,7 +85,4 @@ public abstract class BaseWXEntryActivity extends Activity implements IWXAPIEven
             shareHandler.release();
         }
     }
-
-    protected abstract String getAppId();
-
 }

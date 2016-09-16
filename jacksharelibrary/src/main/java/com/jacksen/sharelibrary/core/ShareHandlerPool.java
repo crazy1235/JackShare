@@ -4,9 +4,15 @@ import android.content.Context;
 
 import com.jacksen.sharelibrary.BaseShareHandler;
 import com.jacksen.sharelibrary.anno.PlatformScope;
+import com.jacksen.sharelibrary.qq.QQChatShareHandler;
+import com.jacksen.sharelibrary.qq.QZoneShareHandler;
 import com.jacksen.sharelibrary.wx.WxChatShareHandler;
+import com.jacksen.sharelibrary.wx.WxFavoriteHandler;
 import com.jacksen.sharelibrary.wx.WxMomentShareHandler;
 
+import static com.jacksen.sharelibrary.core.Platform.QQ;
+import static com.jacksen.sharelibrary.core.Platform.QZone;
+import static com.jacksen.sharelibrary.core.Platform.WX_FAVORITE;
 import static com.jacksen.sharelibrary.core.Platform.WX_MOMENT;
 import static com.jacksen.sharelibrary.core.Platform.WX_SESSION;
 import static com.jacksen.sharelibrary.core.Platform.WX_MOMENT;
@@ -36,6 +42,15 @@ public class ShareHandlerPool {
                 break;
             case WX_MOMENT:
                 handler = new WxMomentShareHandler(context);
+                break;
+            case WX_FAVORITE:
+                handler = new WxFavoriteHandler(context);
+                break;
+            case QQ:
+                handler = new QQChatShareHandler(context);
+                break;
+            case QZone:
+                handler = new QZoneShareHandler(context);
                 break;
             default:
                 handler = new DefaultShareHandler(context);

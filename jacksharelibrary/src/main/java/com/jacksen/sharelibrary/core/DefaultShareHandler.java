@@ -1,6 +1,7 @@
 package com.jacksen.sharelibrary.core;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.jacksen.sharelibrary.BaseShareHandler;
 import com.jacksen.sharelibrary.exception.ShareException;
@@ -18,6 +19,11 @@ public class DefaultShareHandler extends BaseShareHandler {
 
     public DefaultShareHandler(Context context) {
         super(context);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
     }
 
     @Override

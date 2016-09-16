@@ -6,6 +6,8 @@ import com.jacksen.sharelibrary.core.Platform;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
@@ -14,7 +16,9 @@ import java.lang.annotation.Target;
 
 @Documented
 @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD})
-@StringDef({Platform.DEFAULT, Platform.WX_MOMENT, Platform.WX_SESSION, Platform.WX_FAVORITE})
+@StringDef({Platform.DEFAULT, Platform.WX_MOMENT, Platform.WX_SESSION, Platform.WX_FAVORITE,
+        Platform.QQ, Platform.QZone})
+@Retention(RetentionPolicy.SOURCE)
 public @interface PlatformScope {
 
 }

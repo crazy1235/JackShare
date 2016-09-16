@@ -1,5 +1,7 @@
 package com.jacksen.sharelibrary.wx.param;
 
+import android.text.TextUtils;
+
 /**
  * Created by Admin on 2016/8/24.
  */
@@ -7,8 +9,11 @@ package com.jacksen.sharelibrary.wx.param;
 public abstract class BaseShareParam {
 
     protected String title;
+
     protected String content;
+
     protected String description;
+
     protected String targetUrl;
 
     public BaseShareParam() {
@@ -24,6 +29,16 @@ public abstract class BaseShareParam {
         this.title = title;
         this.content = content;
         this.targetUrl = targetUrl;
+    }
+
+    /**
+     * for qq
+     *
+     * @return
+     */
+    public String getSummary() {
+        return TextUtils.isEmpty(getContent()) ? (TextUtils.isEmpty(getDescription()) ?
+                "" : getDescription()) : getContent();
     }
 
     public String getTitle() {

@@ -1,22 +1,28 @@
 package com.jacksen.sharelib.demo;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.jacksen.sharelib.demo.util.Constants;
 import com.jacksen.sharelibrary.JackShare;
 import com.jacksen.sharelibrary.ShareListener;
 import com.jacksen.sharelibrary.anno.PlatformScope;
+import com.jacksen.sharelibrary.core.LoginListener;
 import com.jacksen.sharelibrary.core.Platform;
 import com.jacksen.sharelibrary.wx.param.ShareImageParam;
+import com.jacksen.sharelibrary.wx.param.ShareMusicParam;
 import com.jacksen.sharelibrary.wx.param.ShareTextParam;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,14 +52,20 @@ public class MainActivity extends AppCompatActivity {
     Button qqBtn;
     @BindView(R.id.qzone_btn)
     Button qzoneBtn;
-    @BindView(R.id.qq_weibo_btn)
-    Button qqWeiboBtn;
     @BindView(R.id.sina_btn)
     Button sinaBtn;
     @BindView(R.id.activity_main)
     LinearLayout activityMain;
+    @BindView(R.id.login_qq_iv)
+    ImageView loginQqIv;
+    @BindView(R.id.login_wx_iv)
+    ImageView loginWxIv;
+    @BindView(R.id.login_sina_iv)
+    ImageView loginSinaIv;
 
     private int shareType = 0;
+
+    private String localImgPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +73,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-//        JackShare.init(this);
+        JackShare.init(this);
 
-        JackShare.init(Constants.WX_APP_ID, Constants.WX_APP_SECRET);
+        String path = Environment.getExternalStorageDirectory().getPath();
+        File file = new File(path + File.separator + "temp.jpg");
+        if (file.exists()) {
+            localImgPath = file.getAbsolutePath();
+        } else {
+            Toast.makeText(this, "请配置一张图片", Toast.LENGTH_SHORT).show();
+        }
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -147,31 +165,89 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @OnClick(R.id.qq_btn)
+    public void shareToQQ() {
+        switch (shareType) {
+            case 1:
+                ShareImageParam imageParam = new ShareImageParam();
+                imageParam.setLocalImgPath(localImgPath);
+                JackShare.share(this, Platform.QQ, imageParam, shareListener);
+                break;
+            case 2:
+                ShareMusicParam musicParam = new ShareMusicParam();
+                musicParam.setTitle("好听的标题");
+                musicParam.setTargetUrl("http://www.baidu.com");
+                musicParam.setAudioUrl("http://mp3.haoduoge.com/s/2016-09-16/1473999813.mp3");
+                musicParam.setContent("ssssss");
+                musicParam.setImgPath(localImgPath);
+                JackShare.share(this, Platform.QQ, musicParam, shareListener);
+                break;
+            case 4:
+                break;
+            default:
+                break;
+        }
+    }
+
     /**
      * 分享监听回调
      */
     private ShareListener shareListener = new ShareListener() {
         @Override
         public void onPreShare(@PlatformScope String platform) {
-            Toast.makeText(MainActivity.this, "准备开始分享...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, platform + "-准备开始分享...", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onSuccess(@PlatformScope String platform) {
-            Toast.makeText(MainActivity.this, "分享成功...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, platform + "-分享成功...", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onError(@PlatformScope String platform, String errMsg) {
-            Toast.makeText(MainActivity.this, "分享失败... -- " + errMsg, Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, platform + "-分享失败... -- " + errMsg, Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onCancel(@PlatformScope String platform) {
-            Toast.makeText(MainActivity.this, "分享取消...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, platform + "-分享取消...", Toast.LENGTH_SHORT).show();
         }
-       
+
     };
+
+    @OnClick(R.id.login_qq_iv)
+    public void loginWithQQ() {
+        JackShare.login(this, Platform.QQ, loginListener);
+    }
+
+    LoginListener loginListener = new LoginListener() {
+        @Override
+        public void onPreLogin(@PlatformScope String platform) {
+
+        }
+
+        @Override
+        public void onLoginSuccess(@PlatformScope String platform, String info) {
+
+        }
+
+        @Override
+        public void onLoginError(@PlatformScope String platform, String errMsg) {
+
+        }
+
+        @Override
+        public void onLoginCancel(@PlatformScope String platform) {
+
+        }
+    };
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        JackShare.onActivityResult(requestCode, resultCode, data);
+    }
 
     @Override
     protected void onDestroy() {

@@ -1,6 +1,16 @@
 package com.jacksen.sharelibrary.wx.param;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.text.TextUtils;
+
+import com.jacksen.sharelibrary.R;
+import com.jacksen.sharelibrary.exception.InvalidParamException;
+import com.jacksen.sharelibrary.util.ImageType;
+import com.tencent.connect.share.QQShare;
+
+import org.w3c.dom.Text;
 
 /**
  * 三种形式：
@@ -28,6 +38,38 @@ public class ShareImageParam extends BaseShareParam {
         super();
         this.localImgPath = localImgPath;
     }
+
+    /**
+     * 图片类型
+     *
+     * @return
+     */
+    public ImageType getImageType() {
+        if (!TextUtils.isEmpty(netImgPath)) {
+            return ImageType.NET;
+        } else if (!TextUtils.isEmpty(localImgPath)) {
+            return ImageType.LOCAL;
+        } else if (bitmap != null && !bitmap.isRecycled()) {
+            return ImageType.BITMAP;
+        }
+        return ImageType.UNKNOWN;
+    }
+
+    /**
+     * @param context
+     * @return
+     */
+    public Bundle getQQShareParams(Context context) throws InvalidParamException {
+        Bundle bundle = null;
+        if (TextUtils.isEmpty(getLocalImgPath())) {
+            throw new InvalidParamException(context.getString(R.string.error_qq_local_img_url_invalid));
+        }
+        bundle = new Bundle();
+        bundle.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_IMAGE);
+        bundle.putString(QQShare.SHARE_TO_QQ_IMAGE_LOCAL_URL, getLocalImgPath());
+        return bundle;
+    }
+
 
     public Bitmap getBitmap() {
         return bitmap;

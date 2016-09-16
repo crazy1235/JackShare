@@ -1,6 +1,7 @@
 package com.jacksen.sharelibrary;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 
 import com.jacksen.sharelibrary.anno.PlatformScope;
@@ -102,4 +103,8 @@ public abstract class BaseShareHandler {
 
     // 分享网页
     protected abstract void shareWebPage(@NonNull ShareWebPageParam webPageParam) throws ShareException;
+
+    //
+    protected abstract void onActivityResult(int requestCode, int resultCode, Intent data);
+
 }

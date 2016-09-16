@@ -16,7 +16,11 @@ public class Platform {
 
     public static final String WX_FAVORITE = "WechatFavorite";
 
-    public static String[] values = new String[]{WX_SESSION, WX_MOMENT, WX_FAVORITE};
+    public static final String QQ = "QQ";
+
+    public static final String QZone = "QZone";
+
+    public static String[] values = new String[]{WX_SESSION, WX_MOMENT, WX_FAVORITE, QQ, QZone};
 
     @PlatformScope
     private String platform;

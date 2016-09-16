@@ -73,7 +73,7 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
 
     @Override
     protected void checkConfig() throws Exception {
-        appId = PlatformConfigHelper.getAppId();
+        appId = PlatformConfigHelper.getAppId(Platform.WX_SESSION);
         if (TextUtils.isEmpty(appId)) {
             throw new ConfigErrorException(context.getString(R.string.error_wx_app_id_invalid));
         }
@@ -229,6 +229,10 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+    }
 
     @Override
     public void release() {

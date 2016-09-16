@@ -11,10 +11,10 @@
     <WechatFavorite AppId="wx67948e9412b651ad" AppSecret="99f1f3aacb140e06b1ebe40d8cffd828" Enable="true" />
 
     <!-- QQ好友 -->
-    <QQ AppId="1111111" AppKey="22222222" Enable="true" />
+    <QQ AppId="222222" AppKey="22222222" Enable="true" />
 
     <!-- QQ空间 -->
-    <QZone AppId="3333333333" AppKey="44444444444" Enable="true" />
+    <QZone AppId="222222" AppKey="44444444444" Enable="true" />
 
     <!-- 腾讯微博 -->
     <TencentWeibo AppId="5555555555" AppSecret="666666666666" Enable="true" RedirectUrl="" />
