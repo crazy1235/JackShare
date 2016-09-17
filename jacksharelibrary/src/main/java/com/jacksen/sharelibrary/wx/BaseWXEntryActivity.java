@@ -30,12 +30,6 @@ public class BaseWXEntryActivity extends Activity implements IWXAPIEventHandler 
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
 
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        if (bundle != null) {
-            appId = bundle.getString("id", "wx67948e9412b651ad");
-        }
-
         appId = PlatformConfigHelper.getAppId(Platform.WX_SESSION);
 
         // 1.

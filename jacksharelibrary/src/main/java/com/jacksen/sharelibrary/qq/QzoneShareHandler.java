@@ -8,11 +8,11 @@ import android.support.annotation.NonNull;
 
 import com.jacksen.sharelibrary.core.Platform;
 import com.jacksen.sharelibrary.exception.ShareException;
-import com.jacksen.sharelibrary.wx.param.ShareImageParam;
-import com.jacksen.sharelibrary.wx.param.ShareMusicParam;
-import com.jacksen.sharelibrary.wx.param.ShareTextParam;
-import com.jacksen.sharelibrary.wx.param.ShareVideoParam;
-import com.jacksen.sharelibrary.wx.param.ShareWebPageParam;
+import com.jacksen.sharelibrary.param.ShareImageParam;
+import com.jacksen.sharelibrary.param.ShareMusicParam;
+import com.jacksen.sharelibrary.param.ShareTextParam;
+import com.jacksen.sharelibrary.param.ShareVideoParam;
+import com.jacksen.sharelibrary.param.ShareWebPageParam;
 import com.tencent.connect.common.Constants;
 import com.tencent.open.utils.ThreadManager;
 import com.tencent.tauth.Tencent;

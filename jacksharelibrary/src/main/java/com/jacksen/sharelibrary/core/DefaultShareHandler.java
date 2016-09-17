@@ -5,11 +5,11 @@ import android.content.Intent;
 
 import com.jacksen.sharelibrary.BaseShareHandler;
 import com.jacksen.sharelibrary.exception.ShareException;
-import com.jacksen.sharelibrary.wx.param.ShareImageParam;
-import com.jacksen.sharelibrary.wx.param.ShareMusicParam;
-import com.jacksen.sharelibrary.wx.param.ShareTextParam;
-import com.jacksen.sharelibrary.wx.param.ShareVideoParam;
-import com.jacksen.sharelibrary.wx.param.ShareWebPageParam;
+import com.jacksen.sharelibrary.param.ShareImageParam;
+import com.jacksen.sharelibrary.param.ShareMusicParam;
+import com.jacksen.sharelibrary.param.ShareTextParam;
+import com.jacksen.sharelibrary.param.ShareVideoParam;
+import com.jacksen.sharelibrary.param.ShareWebPageParam;
 
 /**
  * Created by Admin on 2016/8/25.

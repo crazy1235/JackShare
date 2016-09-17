@@ -8,36 +8,36 @@ import com.jacksen.sharelibrary.anno.PlatformScope;
  * @since 2016/9/16
  */
 
-public interface LoginListener {
+public interface AuthListener {
 
     /**
-     * before login
+     * before Auth
      *
      * @param platform
      */
-    void onPreLogin(@PlatformScope String platform);
+    void onPreAuth(@PlatformScope String platform);
 
     /**
-     * login success
+     * Auth success
      *
      * @param platform
      * @param info
      */
-    void onLoginSuccess(@PlatformScope String platform, String info);
+    void onAuthSuccess(@PlatformScope String platform, String info);
 
     /**
-     * login failure
+     * Auth failure
      *
      * @param platform
      * @param errMsg
      */
-    void onLoginError(@PlatformScope String platform, String errMsg);
+    void onAuthError(@PlatformScope String platform, String errMsg);
 
     /**
-     * login canceled
+     * Auth canceled
      *
      * @param platform
      */
-    void onLoginCancel(@PlatformScope String platform);
+    void onAuthCancel(@PlatformScope String platform);
 
 }

@@ -2,7 +2,7 @@ package com.jacksen.sharelibrary.util;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -21,16 +21,22 @@ public class BitmapUtil {
      * @return
      */
     public static byte[] bitmapToByteArray(Bitmap bitmap) {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-        bitmap.recycle();
-        byte[] result = outputStream.toByteArray();
-        try {
-            outputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (bitmap != null && !bitmap.isRecycled()) {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+//            bitmap.recycle();
+            byte[] result = outputStream.toByteArray();
+            try {
+                outputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return result;
+        } else {
+            Log.e("BitmapUtil", "bitmap == null or bitmap.isRecycled()");
+            return null;
         }
-        return result;
+
     }
 
     public static Bitmap decodeImageFile(String path, float width, float height) {

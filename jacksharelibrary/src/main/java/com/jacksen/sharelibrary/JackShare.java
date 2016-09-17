@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 
 import com.jacksen.sharelibrary.anno.PlatformScope;
-import com.jacksen.sharelibrary.core.LoginListener;
+import com.jacksen.sharelibrary.core.AuthListener;
 import com.jacksen.sharelibrary.core.ShareHandlerPool;
 import com.jacksen.sharelibrary.exception.ShareException;
-import com.jacksen.sharelibrary.wx.param.BaseShareParam;
+import com.jacksen.sharelibrary.param.BaseShareParam;
 
 /**
  * Created by jacksen on 2016/8/24.
@@ -39,7 +39,7 @@ public class JackShare {
         }
     }
 
-    public static void login(Context context, @PlatformScope String platform, LoginListener loginListener) {
+    public static void login(Context context, @PlatformScope String platform, AuthListener authListener) {
 
     }
 

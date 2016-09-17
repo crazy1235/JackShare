@@ -1,4 +1,4 @@
-package com.jacksen.sharelibrary.wx.param;
+package com.jacksen.sharelibrary.param;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -9,8 +9,6 @@ import com.jacksen.sharelibrary.R;
 import com.jacksen.sharelibrary.exception.InvalidParamException;
 import com.jacksen.sharelibrary.util.ImageType;
 import com.tencent.connect.share.QQShare;
-
-import org.w3c.dom.Text;
 
 /**
  * 三种形式：

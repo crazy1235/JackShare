@@ -1,4 +1,4 @@
-package com.jacksen.sharelibrary.wx.param;
+package com.jacksen.sharelibrary.param;
 
 import android.content.Context;
 import android.os.Bundle;

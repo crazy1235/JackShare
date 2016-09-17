@@ -21,11 +21,11 @@ import com.jacksen.sharelibrary.exception.ShareException;
 import com.jacksen.sharelibrary.exception.UnsupportedOperateException;
 import com.jacksen.sharelibrary.util.BitmapUtil;
 import com.jacksen.sharelibrary.util.ConstUtil;
-import com.jacksen.sharelibrary.wx.param.ShareImageParam;
-import com.jacksen.sharelibrary.wx.param.ShareMusicParam;
-import com.jacksen.sharelibrary.wx.param.ShareTextParam;
-import com.jacksen.sharelibrary.wx.param.ShareVideoParam;
-import com.jacksen.sharelibrary.wx.param.ShareWebPageParam;
+import com.jacksen.sharelibrary.param.ShareImageParam;
+import com.jacksen.sharelibrary.param.ShareMusicParam;
+import com.jacksen.sharelibrary.param.ShareTextParam;
+import com.jacksen.sharelibrary.param.ShareVideoParam;
+import com.jacksen.sharelibrary.param.ShareWebPageParam;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
@@ -124,13 +124,7 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
         textMsg.mediaObject = textObject;
         textMsg.description = textParam.getContent(); // description
 
-        SendMessageToWX.Req req = new SendMessageToWX.Req();
-        req.transaction = buildTransaction();
-        req.message = textMsg;
-        req.scene = getWxShareType();
-
-        boolean result = iwxapi.sendReq(req);
-        judgeShareResult(result);
+        doShare(textMsg);
     }
 
     @Override
@@ -145,15 +139,9 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
         msg.mediaObject = imageObject;
         Bitmap thumb = Bitmap.createScaledBitmap(imageParam.getBitmap(), ConstUtil.THUMB_SIZE_LIMIT, ConstUtil.THUMB_SIZE_LIMIT, true);
         msg.setThumbImage(thumb);
+        thumb.recycle();
 
-        SendMessageToWX.Req req = new SendMessageToWX.Req();
-        req.transaction = buildTransaction();
-        req.message = msg;
-        req.scene = getWxShareType();
-
-        boolean result = iwxapi.sendReq(req);
-        judgeShareResult(result);
-
+        doShare(msg);
     }
 
     @Override
@@ -166,6 +154,8 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
         mediaMessage.title = musicParam.getTitle();
         mediaMessage.description = musicParam.getDescription();
 
+
+        doShare(mediaMessage);
     }
 
     @Override
@@ -186,13 +176,7 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
         message.description = webPageParam.getDescription(); // 网页描述
         message.thumbData = BitmapUtil.bitmapToByteArray(webPageParam.getThumbBitmap());
 
-        SendMessageToWX.Req req = new SendMessageToWX.Req();
-        req.message = message;
-        req.transaction = buildTransaction();
-        req.scene = getWxShareType(); // 分享到朋友或者朋友圈
-
-        boolean result = iwxapi.sendReq(req);
-        judgeShareResult(result);
+        doShare(message);
     }
 
     /**
@@ -203,7 +187,7 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
      */
     private WXImageObject buildWXImageObject(ShareImageParam imageParam) {
         WXImageObject imageObject = new WXImageObject();
-        Bitmap bitmap;
+        Bitmap bitmap = null;
         if (!TextUtils.isEmpty(imageParam.getLocalImgPath())) {
             bitmap = BitmapUtil.decodeImageFile(imageParam.getLocalImgPath(), ConstUtil.THUMB_SIZE_LIMIT, ConstUtil.THUMB_SIZE_LIMIT);
         } else if (imageParam.getBitmap() != null) {
@@ -212,8 +196,23 @@ public abstract class BaseWXShareHandler extends BaseShareHandler {
             bitmap = BitmapUtil.decodeImageFile(imageParam.getNetImgPath(), ConstUtil.THUMB_SIZE_LIMIT, ConstUtil.THUMB_SIZE_LIMIT);
         }
 
-        imageObject.imageData = BitmapUtil.bitmapToByteArray(imageParam.getBitmap());
+        imageObject.imageData = BitmapUtil.bitmapToByteArray(bitmap);
         return imageObject;
+    }
+
+    /**
+     * 分享操作
+     * @param mediaMessage
+     * @throws ShareException
+     */
+    private void doShare(WXMediaMessage mediaMessage) throws ShareException {
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = buildTransaction();
+        req.message = mediaMessage;
+        req.scene = getWxShareType();
+
+        boolean result = iwxapi.sendReq(req);
+        judgeShareResult(result);
     }
 
     /**

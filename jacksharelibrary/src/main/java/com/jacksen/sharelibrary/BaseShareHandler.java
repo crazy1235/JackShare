@@ -6,12 +6,12 @@ import android.support.annotation.NonNull;
 
 import com.jacksen.sharelibrary.anno.PlatformScope;
 import com.jacksen.sharelibrary.exception.ShareException;
-import com.jacksen.sharelibrary.wx.param.BaseShareParam;
-import com.jacksen.sharelibrary.wx.param.ShareImageParam;
-import com.jacksen.sharelibrary.wx.param.ShareMusicParam;
-import com.jacksen.sharelibrary.wx.param.ShareTextParam;
-import com.jacksen.sharelibrary.wx.param.ShareVideoParam;
-import com.jacksen.sharelibrary.wx.param.ShareWebPageParam;
+import com.jacksen.sharelibrary.param.BaseShareParam;
+import com.jacksen.sharelibrary.param.ShareImageParam;
+import com.jacksen.sharelibrary.param.ShareMusicParam;
+import com.jacksen.sharelibrary.param.ShareTextParam;
+import com.jacksen.sharelibrary.param.ShareVideoParam;
+import com.jacksen.sharelibrary.param.ShareWebPageParam;
 
 /**
  * Created by Admin on 2016/8/24.

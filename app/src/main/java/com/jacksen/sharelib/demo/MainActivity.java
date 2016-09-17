@@ -16,12 +16,12 @@ import android.widget.Toast;
 import com.jacksen.sharelibrary.JackShare;
 import com.jacksen.sharelibrary.ShareListener;
 import com.jacksen.sharelibrary.anno.PlatformScope;
-import com.jacksen.sharelibrary.core.LoginListener;
+import com.jacksen.sharelibrary.core.AuthListener;
 import com.jacksen.sharelibrary.core.Platform;
-import com.jacksen.sharelibrary.wx.param.ShareImageParam;
-import com.jacksen.sharelibrary.wx.param.ShareMusicParam;
-import com.jacksen.sharelibrary.wx.param.ShareTextParam;
-import com.jacksen.sharelibrary.wx.param.ShareWebPageParam;
+import com.jacksen.sharelibrary.param.ShareImageParam;
+import com.jacksen.sharelibrary.param.ShareMusicParam;
+import com.jacksen.sharelibrary.param.ShareTextParam;
+import com.jacksen.sharelibrary.param.ShareWebPageParam;
 
 import java.io.File;
 
@@ -115,15 +115,15 @@ public class MainActivity extends AppCompatActivity {
     public void shareToWechat() {
         switch (shareType) {
             case 0:
-
-                ShareTextParam shareTextParam = new ShareTextParam("不要再逗留，人心太拥挤");
+                ShareTextParam shareTextParam = new ShareTextParam("问句天几高心中志比天更高！");
                 JackShare.share(this, Platform.WX_SESSION, shareTextParam, shareListener);
 
                 break;
             case 1:
                 ShareImageParam imageParam = new ShareImageParam();
-                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
-                imageParam.setBitmap(bitmap);
+//                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+//                imageParam.setBitmap(bitmap);
+                imageParam.setLocalImgPath(localImgPath);
                 JackShare.share(MainActivity.this, Platform.WX_SESSION, imageParam, shareListener);
                 break;
             case 2:
@@ -234,27 +234,27 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.login_qq_iv)
     public void loginWithQQ() {
-        JackShare.login(this, Platform.QQ, loginListener);
+        JackShare.login(this, Platform.QQ, authListener);
     }
 
-    LoginListener loginListener = new LoginListener() {
+    AuthListener authListener = new AuthListener() {
         @Override
-        public void onPreLogin(@PlatformScope String platform) {
+        public void onPreAuth(@PlatformScope String platform) {
 
         }
 
         @Override
-        public void onLoginSuccess(@PlatformScope String platform, String info) {
+        public void onAuthSuccess(@PlatformScope String platform, String info) {
 
         }
 
         @Override
-        public void onLoginError(@PlatformScope String platform, String errMsg) {
+        public void onAuthError(@PlatformScope String platform, String errMsg) {
 
         }
 
         @Override
-        public void onLoginCancel(@PlatformScope String platform) {
+        public void onAuthCancel(@PlatformScope String platform) {
 
         }
     };
